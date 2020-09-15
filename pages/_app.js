@@ -1,33 +1,30 @@
+import { useEffect } from 'react';
+import App from 'next/app';
 import { appWithTranslation } from '../i18n';
 import '../styles/tailwind.css';
 import Fonts from '../components/Fonts';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 
-class MyApp extends React.Component {
-  componentDidMount() {
+function MyApp({ Component, pageProps }) {
+  useEffect(() => {
     Fonts();
-  }
+  });
 
-  static async getInitialProps() {
-    const appProps = await App.getInitialProps(appContext);
-    return { ...appProps };
-  }
-
-  render(props) {
-    const { Component, pageProps } = this.props;
-
-    return (
-      <div>
-        <Layout>
-          <Header />
-        </Layout>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Layout>
+        <Header />
+      </Layout>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </div>
+  );
 }
+
+MyApp.getInitialProps = async (appContext) => ({
+  ...(await App.getInitialProps(appContext)),
+});
 
 export default appWithTranslation(MyApp);
