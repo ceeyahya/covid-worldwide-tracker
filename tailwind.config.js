@@ -9,8 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Lato', ...defaultTheme.fontFamily.sans],
-        serif: ['Neuton', ...defaultTheme.fontFamily.serif],
+        sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
       },
     },
   },

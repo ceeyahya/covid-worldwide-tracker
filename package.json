@@ -16,6 +16,7 @@
     "next-i18next": "^6.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-query": "^2.20.0",
     "tailwindcss": "^1.8.10"
   }
 }
