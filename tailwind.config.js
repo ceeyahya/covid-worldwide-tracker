@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'bmc-orange': '#ef874f',
+      },
     },
   },
   variants: {},

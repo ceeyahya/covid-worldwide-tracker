@@ -89,6 +89,20 @@ export default function Header() {
           </div>
           <div className="flex items-center">
             <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://buymeacoffee.com/cyahya"
+                type="button"
+                className="flex items-center px-3 py-2 font-semibold text-white rounded-sm bg-bmc-orange"
+              >
+                <img
+                  src="/images/buymeacoffeelogo.svg"
+                  alt="Buy Me a Coffee"
+                  className="w-8 h-8 mr-2"
+                />
+                Support The Project
+              </a>
               <div className="relative ml-3">
                 <div>
                   <button

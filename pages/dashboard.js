@@ -27,7 +27,9 @@ export default function dashboard() {
             placeholder="Morocco or Africa..."
           />
         </div>
-        <p className="px-2 mt-1 text-sm text-gray-500">hello</p>
+        <p className="px-2 mt-1 text-sm text-gray-500">
+          Possibilite de recherche par pays ou par continent
+        </p>
       </div>
       <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((item) => {
