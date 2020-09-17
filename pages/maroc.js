@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query';
 import { QueryCache } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
+import { formatNumber } from '../utils/formatNumber';
+import { withTranslation } from '../i18n';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const fetchMoroccoData = async () => {
@@ -10,10 +12,6 @@ const fetchMoroccoData = async () => {
   const data = await res.json();
   return data;
 };
-
-function formatNumber(nbr) {
-  return nbr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 
 export async function getServerSideProps(context) {
   const queryCache = new QueryCache();
@@ -25,7 +23,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function maroc() {
+function maroc({ t }) {
   const { status, data, error } = useQuery('data', fetchMoroccoData);
   const getPercentagePopulation = () => {
     const percentage = (data.cases * 100) / data.population;
@@ -49,24 +47,24 @@ export default function maroc() {
         </h2>
       </div>
 
-      <div class="mt-4 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow md:grid-cols-4">
+      <div className="grid grid-cols-1 mt-4 overflow-hidden bg-white rounded-lg shadow md:grid-cols-4">
         <div>
-          <div class="px-4 py-5 sm:p-6">
+          <div className="px-4 py-5 sm:p-6">
             <dl>
-              <dt class="text-base leading-6 font-normal text-gray-900">
-                Total Cases
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Total Cases')}
               </dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <div class="flex items-baseline text-2xl leading-8 font-semibold text-blue-600">
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
                   {formatNumber(data.cases)}
-                  <span class="ml-2 text-sm leading-5 font-medium text-gray-500">
-                    from {formatNumber(data.population)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.population)}
                   </span>
                 </div>
               </dd>
-              <div class="inline-flex items-baseline px-3 py-1 rounded-sm font-normal text-sm leading-5 bg-blue-100 text-blue-800 md:mt-2">
+              <div className="inline-flex items-baseline px-3 py-1 text-sm font-normal leading-5 text-blue-800 bg-blue-100 rounded-sm md:mt-2">
                 <svg
-                  class="-ml-1 mr-1 flex-shrink-0 self-center h-4 w-4 text-blue-500 "
+                  className="self-center flex-shrink-0 w-4 h-4 mr-1 -ml-1 text-blue-500 "
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -77,56 +75,56 @@ export default function maroc() {
                     clipRule="evenodd"
                   />
                 </svg>
-                {getPercentagePopulation()}% of the population
+                {getPercentagePopulation()}% {t('of the population')}
               </div>
             </dl>
           </div>
         </div>
-        <div class="border-t border-gray-200 md:border-0 md:border-l">
-          <div class="px-4 py-5 sm:p-6">
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
             <dl>
-              <dt class="text-base leading-6 font-normal text-gray-900">
-                Total Recovered
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Total Recovered')}
               </dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <div class="flex items-baseline text-2xl leading-8 font-semibold text-blue-600">
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
                   {formatNumber(data.recovered)}
-                  <span class="ml-2 text-sm leading-5 font-medium text-gray-500">
-                    from {formatNumber(data.cases)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
                   </span>
                 </div>
               </dd>
             </dl>
           </div>
         </div>
-        <div class="border-t border-gray-200 md:border-0 md:border-l">
-          <div class="px-4 py-5 sm:p-6">
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
             <dl>
-              <dt class="text-base leading-6 font-normal text-gray-900">
-                Total Deaths
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Total Deaths')}
               </dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <div class="flex items-baseline text-2xl leading-8 font-semibold text-blue-600">
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
                   {formatNumber(data.deaths)}
-                  <span class="ml-2 text-sm leading-5 font-medium text-gray-500">
-                    from {formatNumber(data.cases)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
                   </span>
                 </div>
               </dd>
             </dl>
           </div>
         </div>
-        <div class="border-t border-gray-200 md:border-0 md:border-l">
-          <div class="px-4 py-5 sm:p-6">
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
             <dl>
-              <dt class="text-base leading-6 font-normal text-gray-900">
-                Active Cases
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Total Active Cases')}
               </dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <div class="flex items-baseline text-2xl leading-8 font-semibold text-blue-600">
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
                   {formatNumber(data.active)}
-                  <span class="ml-2 text-sm leading-5 font-medium text-gray-500">
-                    from {formatNumber(data.cases)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
                   </span>
                 </div>
               </dd>
@@ -135,41 +133,39 @@ export default function maroc() {
         </div>
       </div>
       <div className="mt-8">
-        <h3 class="text-lg leading-6 font-semibold text-gray-900">
-          Aujourd'hui
-        </h3>
-        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+        <h3 className="text-lg font-semibold leading-6 text-gray-900">Today</h3>
+        <div className="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Cases Today
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Cases Today')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.todayCases)}
                 </dd>
               </dl>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Recovered Today
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Recovered Today')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.todayRecovered)}
                 </dd>
               </dl>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Deaths Today
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Deaths Today')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.todayDeaths)}
                 </dd>
               </dl>
@@ -178,29 +174,29 @@ export default function maroc() {
         </div>
       </div>
       <div className="mt-8">
-        <h3 class="text-lg leading-6 font-semibold text-gray-900">
-          Plus d'informations
+        <h3 className="text-lg font-semibold leading-6 text-gray-900">
+          {t('More Informations')}
         </h3>
-        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+        <div className="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Total Tests
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Total Tests')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.tests)}
                 </dd>
               </dl>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Critical Cases
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Critical Cases')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.critical)}
                 </dd>
               </dl>
@@ -209,41 +205,41 @@ export default function maroc() {
         </div>
       </div>
       <div className="mt-8">
-        <h3 class="text-lg leading-6 font-semibold text-gray-900">
-          Proportions par Million
+        <h3 className="text-lg font-semibold leading-6 text-gray-900">
+          {t('Proportions per million people')}
         </h3>
-        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+        <div className="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Cases per million
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Cases per million people')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.casesPerOneMillion)}
                 </dd>
               </dl>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Recovered per million
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Recovered per million people')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.recoveredPerOneMillion)}
                 </dd>
               </dl>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
+          <div className="overflow-hidden bg-white rounded-lg shadow">
+            <div className="px-4 py-5 sm:p-6">
               <dl>
-                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Deaths per million
+                <dt className="text-sm font-medium leading-5 text-gray-500 truncate">
+                  {t('Deaths per million people')}
                 </dt>
-                <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <dd className="mt-1 text-3xl font-semibold leading-9 text-gray-900">
                   {formatNumber(data.deathsPerOneMillion)}
                 </dd>
               </dl>
@@ -254,3 +250,5 @@ export default function maroc() {
     </div>
   );
 }
+
+export default withTranslation('maroc')(maroc);

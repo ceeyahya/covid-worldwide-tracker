@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { I18nContext } from 'next-i18next';
-import { i18n } from '../i18n';
+import { i18n, withTranslation } from '../i18n';
 
-export default function Header() {
+function Header({ t }) {
   const {
     i18n: { language },
   } = useContext(I18nContext);
@@ -19,7 +19,7 @@ export default function Header() {
     },
     {
       path: '/dashboard',
-      title: 'Tableau de Bord',
+      title: 'Tous les pays',
     },
     {
       path: '/maroc',
@@ -106,7 +106,7 @@ export default function Header() {
                   alt="Buy Me a Coffee"
                   className="w-8 h-8 mr-2"
                 />
-                Support The Project
+                {t('Support the Project')}
               </a>
               <div className="relative ml-3">
                 <div>
@@ -189,3 +189,5 @@ export default function Header() {
     </nav>
   );
 }
+
+export default withTranslation('header')(Header);

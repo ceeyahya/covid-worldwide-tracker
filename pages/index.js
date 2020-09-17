@@ -1,135 +1,206 @@
+import { useQuery } from 'react-query';
+import { QueryCache } from 'react-query';
+import { dehydrate } from 'react-query/hydration';
 import { withTranslation } from '../i18n';
+import { formatNumber } from '../utils/formatNumber';
+import LoadingSpinner from '../components/LoadingSpinner';
+
+const fetchGlobalData = async () => {
+  const res = await fetch(
+    'https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false&allowNull=true'
+  );
+  const data = await res.json();
+  return data;
+};
+
+export async function getServerSideProps(context) {
+  const queryCache = new QueryCache();
+  await queryCache.prefetchQuery('data', fetchGlobalData);
+  return {
+    props: {
+      dehydratedState: dehydrate(queryCache),
+    },
+  };
+}
 
 function Home({ t }) {
+  const { status, data, error } = useQuery('data', fetchGlobalData);
+  if (status === 'loading') return <LoadingSpinner />;
+  if (status === 'error') return <div>{error}</div>;
+
   return (
-    <div>
-      <main class="mt-10 mx-auto max-w-screen-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 xl:mt-28">
-        <div class="text-center">
-          <h2 class="text-4xl tracking-tighter leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-            Data to enrich your <br class="xl:hidden" />
-            <span class="text-blue-500">online business</span>
-          </h2>
-          <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
-          </p>
-          <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-            <div class="rounded-md shadow">
-              <a
-                href="#"
-                class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-500 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition duration-150 ease-in-out"
-              >
-                Get started
-              </a>
-            </div>
-            <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-              <a
-                href="#"
-                class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-blue-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo transition duration-150 ease-in-out"
-              >
-                Live demo
-              </a>
-            </div>
+    <div className="mt-14">
+      <h2 className="text-4xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-none md:text-4xl">
+        {t('Current state of COVID-19 across the world')}
+      </h2>
+      <div className="grid grid-cols-1 mt-5 overflow-hidden bg-white rounded-lg shadow md:grid-cols-4">
+        <div>
+          <div className="px-4 py-5 sm:p-6">
+            <dl>
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Global Cases')}
+              </dt>
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600 md:block">
+                  {formatNumber(data.cases)} <br />
+                  <span className="ml-1 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.population)}
+                  </span>
+                </div>
+              </dd>
+            </dl>
           </div>
         </div>
-      </main>
-      <div className="mt-32">
-        <h2 class="text-4xl tracking-tighter leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-4xl text-center">
-          Data to enrich your online business
-        </h2>
-        <ul class="mt-20 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/attention.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/hand_washing.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/medicalmask.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/no_groups.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/no_handshake.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/recommendations/stayhome.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-        </ul>
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
+            <dl>
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Global Recoveries')}
+              </dt>
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
+                  {formatNumber(data.recovered)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
+                  </span>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
+            <dl>
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Global Deaths')}
+              </dt>
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
+                  {formatNumber(data.deaths)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
+                  </span>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div className="border-t border-gray-200 md:border-0 md:border-l">
+          <div className="px-4 py-5 sm:p-6">
+            <dl>
+              <dt className="text-base font-normal leading-6 text-gray-900">
+                {t('Global Active Cases')}
+              </dt>
+              <dd className="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <div className="flex items-baseline text-2xl font-semibold leading-8 text-blue-600">
+                  {formatNumber(data.active)}
+                  <span className="ml-2 text-sm font-medium leading-5 text-gray-500">
+                    {t('from')} {formatNumber(data.cases)}
+                  </span>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
       </div>
       <div className="mt-32">
-        <h2 class="text-4xl tracking-tighter leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-4xl text-center">
-          Data to enrich your online business
+        <h2 className="text-4xl font-extrabold leading-normal tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-normal md:text-4xl">
+          {t(
+            'In order to neutralize the virus please follow the following recommendations'
+          )}
         </h2>
-        <ul class="mt-20 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/cough.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/dizziness.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/fever.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/high_temperature.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/lungs.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
-          <li class="col-span-1 flex mx-auto">
-            <img
-              src="/images/symptoms/tiredness.svg"
-              alt=""
-              className="w-24 h-24"
-            />
-          </li>
+        <ul className="grid grid-cols-1 gap-10 mt-20 sm:gap-14 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              description: 'Wear your masks.',
+              icon: 'medicalmask',
+            },
+            {
+              description: 'Avoid any unnecessary contact.',
+              icon: 'nohandshake',
+            },
+            {
+              description: 'Wash your hands regularly.',
+              icon: 'handwashing',
+            },
+            {
+              description: 'Avoid large groups of people.',
+              icon: 'nogroups',
+            },
+            {
+              description: 'Take the necessary precautions when you go out.',
+              icon: 'attention',
+            },
+            {
+              description: "Stay at home whenever it's possible.",
+              icon: 'stayhome',
+            },
+          ].map((item) => {
+            return (
+              <li className="flex col-span-1 mx-auto">
+                <div className="flex flex-col justify-center text-center">
+                  <img
+                    src={`/images/recommendations/${item.icon}.svg`}
+                    alt=""
+                    className="w-24 h-24 mx-auto"
+                  />
+                  <p className="mt-4 text-base font-semibold">
+                    {t(`${item.description}`)}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="mt-32 mb-32">
+        <h2 className="text-4xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-normal md:text-4xl">
+          {t(
+            'If you feel any of these symptoms please seek medical attention, contact the nearest doctor/medical facility'
+          )}
+        </h2>
+        <ul className="grid grid-cols-1 gap-10 mt-20 sm:gap-14 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              description: 'Dry cough.',
+              icon: 'cough',
+            },
+            {
+              description: 'Dizziness.',
+              icon: 'dizziness',
+            },
+            {
+              description: 'Fever.',
+              icon: 'fever',
+            },
+            {
+              description: 'High Temperature.',
+              icon: 'hightemperature',
+            },
+            {
+              description: 'Breathing difficulties.',
+              icon: 'lungs',
+            },
+            {
+              description: 'Tiredness.',
+              icon: 'tiredness',
+            },
+          ].map((item) => {
+            return (
+              <li className="flex col-span-1 mx-auto">
+                <div className="flex flex-col justify-center text-center">
+                  <img
+                    src={`/images/symptoms/${item.icon}.svg`}
+                    alt=""
+                    className="w-24 h-24 mx-auto"
+                  />
+                  <p className="mt-4 text-base font-semibold">
+                    {t(`${item.description}`)}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

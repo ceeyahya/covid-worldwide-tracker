@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   return (
-    <div className="">
+    <body className="bg-gray-50">
       <Layout>
         <Header />
       </Layout>
@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }) {
           </Hydrate>
         </ReactQueryCacheProvider>
       </Layout>
-    </div>
+    </body>
   );
 }
 

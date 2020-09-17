@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query';
 import { QueryCache } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
+import { formatNumber } from '../utils/formatNumber';
+import { withTranslation } from '../i18n';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const fetchAllData = async () => {
@@ -19,7 +21,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function dashboard() {
+function dashboard({ t }) {
   const { status, data, error } = useQuery('data', fetchAllData);
   if (status === 'loading') return <LoadingSpinner />;
   if (status === 'error') return <div>{error}</div>;
@@ -28,44 +30,44 @@ export default function dashboard() {
     <div>
       <div>
         <label
-          for="search"
-          class="block text-sm font-medium leading-5 text-gray-700"
+          htmlFor="search"
+          className="block text-base font-semibold leading-5 text-gray-700"
         >
-          Search
+          {t('Search')}
         </label>
-        <div class="mt-1 relative rounded-md shadow-sm">
+        <div className="relative mt-1 rounded-md shadow-sm">
           <input
             id="country_continent"
-            class="form-input block w-full pr-10 sm:text-sm sm:leading-5"
+            className="block w-full pr-10 form-input sm:text-sm sm:leading-5"
             placeholder="Morocco or Africa..."
           />
         </div>
         <p className="px-2 mt-1 text-sm text-gray-500">
-          Possibilite de recherche par pays ou par continent
+          {t('Search by country or continent')}
         </p>
       </div>
-      <div class="mt-5 mb-16 lg:mb-24 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 mt-5 mb-16 lg:mb-24 sm:grid-cols-2 lg:grid-cols-3">
         {data
           .filter((o) => o.countryInfo._id != 732)
           .map((item) => {
             return (
-              <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                  <div class="flex items-center">
-                    <div class="flex-shrink-0 p-3">
+              <div className="overflow-hidden bg-white rounded-lg shadow">
+                <div className="px-4 py-5 sm:p-6">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0 p-3">
                       <img
                         src={item.countryInfo.flag}
                         alt=""
                         className="w-12 h-8"
                       />
                     </div>
-                    <div class="ml-5 w-0 flex-1">
+                    <div className="flex-1 w-0 ml-5">
                       <dl>
-                        <dt class="text-xl leading-8 font-semibold text-gray-900">
+                        <dt className="text-xl font-semibold leading-8 text-gray-900">
                           {item.country}
                         </dt>
-                        <dd class="flex items-baseline">
-                          <div class="text-sm leading-5 font-medium text-gray-500 truncate">
+                        <dd className="flex items-baseline">
+                          <div className="text-sm font-medium leading-5 text-gray-500 truncate">
                             {item.continent}
                           </div>
                         </dd>
@@ -73,26 +75,32 @@ export default function dashboard() {
                     </div>
                   </div>
                 </div>
-                <div class="px-4 py-4 sm:px-6">
-                  <ul class="grid gap-4 grid-cols-3">
-                    <li class="col-span-1 bg-white">
-                      <div className="flex flex-col text-center">
-                        <h3 className="text-lg font-semibold">{item.cases}</h3>
-                        <p className="text-base text-gray-500">Cases</p>
-                      </div>
-                    </li>
-                    <li class="col-span-1 bg-white">
+                <div className="px-4 py-4 sm:px-6">
+                  <ul className="grid grid-cols-3 gap-4">
+                    <li className="col-span-1 bg-white">
                       <div className="flex flex-col text-center">
                         <h3 className="text-lg font-semibold">
-                          {item.recovered}
+                          {formatNumber(item.cases)}
                         </h3>
-                        <p className="text-base text-gray-500">Recovered</p>
+                        <p className="text-base text-gray-500">{t('Cases')}</p>
                       </div>
                     </li>
-                    <li class="col-span-1 bg-white">
+                    <li className="col-span-1 bg-white">
                       <div className="flex flex-col text-center">
-                        <h3 className="text-lg font-semibold">{item.deaths}</h3>
-                        <p className="text-base text-gray-500">Deaths</p>
+                        <h3 className="text-lg font-semibold">
+                          {formatNumber(item.recovered)}
+                        </h3>
+                        <p className="text-base text-gray-500">
+                          {t('Recovered')}
+                        </p>
+                      </div>
+                    </li>
+                    <li className="col-span-1 bg-white">
+                      <div className="flex flex-col text-center">
+                        <h3 className="text-lg font-semibold">
+                          {formatNumber(item.deaths)}
+                        </h3>
+                        <p className="text-base text-gray-500">{t('Deaths')}</p>
                       </div>
                     </li>
                   </ul>
@@ -104,3 +112,5 @@ export default function dashboard() {
     </div>
   );
 }
+
+export default withTranslation('dashboard')(dashboard);
