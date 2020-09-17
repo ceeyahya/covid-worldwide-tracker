@@ -68,7 +68,12 @@ export default function Header() {
             </div>
             <div className="flex items-center flex-shrink-0">
               <Link href="/">
-                <a>
+                <a className="flex items-center">
+                  <img
+                    src="/images/virus.svg"
+                    alt="COVID-19 Tracker Logo"
+                    className="w-8 h-8 mr-2"
+                  />
                   <h1 className="text-2xl font-black text-gray-900 ">
                     COVID-19 Tracker
                   </h1>
@@ -79,7 +84,7 @@ export default function Header() {
               {routes.map((route) => {
                 return (
                   <Link href={route.path}>
-                    <a className="px-3 py-2 ml-4 text-base font-medium leading-5 text-gray-800 transition duration-150 ease-in-out">
+                    <a className="py-2 ml-4 text-base font-medium leading-5 text-gray-800 transition duration-150 ease-in-out">
                       {route.title}
                     </a>
                   </Link>
@@ -136,10 +141,10 @@ export default function Header() {
                         Français
                       </button>
                       <button
-                        onClick={() => i18n.changeLanguage('ar')}
+                        onClick={() => i18n.changeLanguage('en')}
                         className="block w-full px-4 py-2 text-base leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none"
                       >
-                        عربية
+                        English
                       </button>
                     </div>
                   </div>
@@ -167,7 +172,7 @@ export default function Header() {
         <div className="pb-3 border-t border-gray-300 ">
           <div className="px-2 mt-3 sm:px-3">
             <button
-              onClick={() => i18n.changeLanguage('fr')}
+              onClick={() => i18n.changeLanguage('en')}
               className="block w-full py-2 text-base font-medium text-gray-900 transition duration-150 ease-in-out"
             >
               Français
@@ -176,7 +181,7 @@ export default function Header() {
               onClick={() => i18n.changeLanguage('ar')}
               className="block w-full py-2 text-base font-medium text-gray-900 transition duration-150 ease-in-out"
             >
-              عربية
+              English
             </button>
           </div>
         </div>

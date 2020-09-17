@@ -17,6 +17,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-query": "^2.20.0",
+    "react-query-devtools": "^2.4.7",
     "tailwindcss": "^1.8.10"
   }
 }
