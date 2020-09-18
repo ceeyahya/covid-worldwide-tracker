@@ -6,7 +6,8 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   purge: {
-    content: ['./src/**/*.js', './next.config.js'],
+    enabled: true,
+    content: ['**/*.js'],
   },
   theme: {
     extend: {
