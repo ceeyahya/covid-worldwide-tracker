@@ -33,7 +33,7 @@ function maroc({ t }) {
   if (status === 'error') return <div>{error}</div>;
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 mb-16">
       <div className="flex items-center">
         <img
           src={data.countryInfo.flag}
