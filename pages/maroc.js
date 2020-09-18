@@ -133,7 +133,12 @@ function maroc({ t }) {
         </div>
       </div>
       <div className="mt-8">
-        <h3 className="text-lg font-semibold leading-6 text-gray-900">Today</h3>
+        <h3 className="text-lg font-semibold leading-6 text-gray-900">
+          {t('Today')}{' '}
+          <span className="font-normal text-gray-400">
+            ({t('Current day data is usually available around 0900PM')})
+          </span>
+        </h3>
         <div className="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-3">
           <div className="overflow-hidden bg-white rounded-lg shadow">
             <div className="px-4 py-5 sm:p-6">
