@@ -12,20 +12,6 @@ function Header({ t }) {
   const [open, setOpen] = useState(false);
   const opened = classNames({ hidden: open, block: !open });
   const closed = classNames({ hidden: !open, block: open });
-  const routes = [
-    {
-      path: '/a-propos',
-      title: 'A propos',
-    },
-    {
-      path: '/dashboard',
-      title: 'Tous les pays',
-    },
-    {
-      path: '/maroc',
-      title: 'Maroc',
-    },
-  ];
 
   return (
     <nav>
@@ -81,15 +67,16 @@ function Header({ t }) {
               </Link>
             </div>
             <div className="hidden md:ml-6 md:flex md:items-center">
-              {routes.map((route) => {
-                return (
-                  <Link href={route.path}>
-                    <a className="py-2 ml-4 text-base font-medium leading-5 text-gray-800 transition duration-150 ease-in-out">
-                      {route.title}
-                    </a>
-                  </Link>
-                );
-              })}
+              <Link href="/dashboard">
+                <a className="py-2 ml-4 text-base font-medium leading-5 text-gray-800 transition duration-150 ease-in-out">
+                  {t('All countries')}
+                </a>
+              </Link>
+              <Link href="/maroc">
+                <a className="py-2 ml-4 text-base font-medium leading-5 text-gray-800 transition duration-150 ease-in-out">
+                  {t('Morocco')}
+                </a>
+              </Link>
             </div>
           </div>
           <div className="flex items-center">
@@ -159,15 +146,30 @@ function Header({ t }) {
         className={classNames(closed, 'md:hidden border border-gray-200 p-2')}
       >
         <div className="pt-2 pb-3 ">
-          {routes.map((route) => {
-            return (
-              <Link href={route.path}>
-                <a className="block px-3 py-2 mt-1 text-base font-medium text-gray-900 transition duration-150 ease-in-out">
-                  {route.title}
-                </a>
-              </Link>
-            );
-          })}
+          <Link href="/dashboard">
+            <a className="block px-3 py-2 mt-1 text-base font-medium text-gray-900 transition duration-150 ease-in-out">
+              {t('All countries')}
+            </a>
+          </Link>
+          <Link href="/maroc">
+            <a className="block px-3 py-2 mt-1 text-base font-medium text-gray-900 transition duration-150 ease-in-out">
+              {t('Morocco')}
+            </a>
+          </Link>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://buymeacoffee.com/cyahya"
+            type="button"
+            className="flex items-center justify-center w-full px-3 py-2 font-semibold text-white rounded-sm bg-bmc-orange"
+          >
+            <img
+              src="/images/buymeacoffeelogo.svg"
+              alt="Buy Me a Coffee"
+              className="w-8 h-8 mr-2"
+            />
+            {t('Support the Project')}
+          </a>
         </div>
         <div className="pb-3 border-t border-gray-300 ">
           <div className="px-2 mt-3 sm:px-3">

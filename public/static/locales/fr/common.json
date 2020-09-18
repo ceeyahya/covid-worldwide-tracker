@@ -6,17 +6,5 @@
   "Global Deaths": "Décès mondiaux",
   "Global Active Cases": "Cas actifs mondiaux",
   "In order to neutralize the virus please follow the following recommendations": "Afin de neutraliser le virus, veuillez suivre les recommandations suivantes",
-  "Wear your masks.": "Portez vos masques.",
-  "Avoid any unnecessary contact.": "Évitez tout contact inutile.",
-  "Wash your hands regularly.": "Lavez-vous les mains régulièrement.",
-  "Avoid large groups of people.": "Évitez les groupements.",
-  "Take the necessary precautions when you go out.": "Prenez les précautions nécessaires lorsque vous sortez.",
-  "Stay at home whenever it's possible.": "Restez à la maison lorsque c'est possible.",
-  "If you feel any of these symptoms please seek medical attention, contact the nearest doctor/medical facility": "Si vous ressentez l'un de ces symptômes, veuillez consulter un médecin ou l'établissement médical le plus proche",
-  "Dry cough.": "{{item.description}}",
-  "Dizziness.": "Étourdissements.",
-  "Fever.": "Fièvre.",
-  "High Temperature.": "Températures élevées.",
-  "Breathing difficulties.": "Difficultés respiratoires.",
-  "Tiredness.": "Fatigue."
+  "If you feel any of these symptoms please seek medical attention, contact the nearest doctor/medical facility": "Si vous ressentez l'un de ces symptômes, veuillez consulter un médecin ou l'établissement médical le plus proche"
 }

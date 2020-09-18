@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import Fuse from 'fuse.js';
 import { useQuery } from 'react-query';
 import { QueryCache } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -23,6 +25,19 @@ export async function getServerSideProps(context) {
 
 function dashboard({ t }) {
   const { status, data, error } = useQuery('data', fetchAllData);
+  const fuse = new Fuse(data, {
+    keys: ['country', 'continent'],
+  });
+  const [search, setSearch] = useState('');
+
+  const results = fuse.search(search);
+  const countryResults = search ? results.map((country) => country.item) : data;
+
+  function handleChange({ currentTarget = {} }) {
+    const { value } = currentTarget;
+    setSearch(value);
+  }
+
   if (status === 'loading') return <LoadingSpinner />;
   if (status === 'error') return <div>{error}</div>;
 
@@ -37,6 +52,8 @@ function dashboard({ t }) {
         </label>
         <div className="relative mt-1 rounded-md shadow-sm">
           <input
+            value={search}
+            onChange={handleChange}
             id="country_continent"
             className="block w-full pr-10 form-input sm:text-sm sm:leading-5"
             placeholder="Morocco or Africa..."
@@ -47,16 +64,16 @@ function dashboard({ t }) {
         </p>
       </div>
       <div className="grid grid-cols-1 gap-5 mt-5 mb-16 lg:mb-24 sm:grid-cols-2 lg:grid-cols-3">
-        {data
-          .filter((o) => o.countryInfo._id != 732)
-          .map((item) => {
+        {countryResults
+          // .filter((o) => o.countryInfo._id != 732)
+          .map((data) => {
             return (
               <div className="overflow-hidden bg-white rounded-lg shadow">
                 <div className="px-4 py-5 sm:p-6">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 p-3">
                       <img
-                        src={item.countryInfo.flag}
+                        src={data.countryInfo.flag}
                         alt=""
                         className="w-12 h-8"
                       />
@@ -64,11 +81,11 @@ function dashboard({ t }) {
                     <div className="flex-1 w-0 ml-5">
                       <dl>
                         <dt className="text-xl font-semibold leading-8 text-gray-900">
-                          {item.country}
+                          {data.country}
                         </dt>
                         <dd className="flex items-baseline">
                           <div className="text-sm font-medium leading-5 text-gray-500 truncate">
-                            {item.continent}
+                            {data.continent}
                           </div>
                         </dd>
                       </dl>
@@ -80,7 +97,7 @@ function dashboard({ t }) {
                     <li className="col-span-1 bg-white">
                       <div className="flex flex-col text-center">
                         <h3 className="text-lg font-semibold">
-                          {formatNumber(item.cases)}
+                          {formatNumber(data.cases)}
                         </h3>
                         <p className="text-base text-gray-500">{t('Cases')}</p>
                       </div>
@@ -88,7 +105,7 @@ function dashboard({ t }) {
                     <li className="col-span-1 bg-white">
                       <div className="flex flex-col text-center">
                         <h3 className="text-lg font-semibold">
-                          {formatNumber(item.recovered)}
+                          {formatNumber(data.recovered)}
                         </h3>
                         <p className="text-base text-gray-500">
                           {t('Recovered')}
@@ -98,7 +115,7 @@ function dashboard({ t }) {
                     <li className="col-span-1 bg-white">
                       <div className="flex flex-col text-center">
                         <h3 className="text-lg font-semibold">
-                          {formatNumber(item.deaths)}
+                          {formatNumber(data.deaths)}
                         </h3>
                         <p className="text-base text-gray-500">{t('Deaths')}</p>
                       </div>

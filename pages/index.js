@@ -3,6 +3,8 @@ import { QueryCache } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import { withTranslation } from '../i18n';
 import { formatNumber } from '../utils/formatNumber';
+import Recommendations from '../components/Recommendations';
+import Symptoms from '../components/Symptoms';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const fetchGlobalData = async () => {
@@ -30,10 +32,10 @@ function Home({ t }) {
 
   return (
     <div className="mt-14">
-      <h2 className="text-4xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-none md:text-4xl">
+      <h2 className="text-2xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-xl sm:leading-none md:text-4xl">
         {t('Current state of COVID-19 across the world')}
       </h2>
-      <div className="grid grid-cols-1 mt-5 overflow-hidden bg-white rounded-lg shadow md:grid-cols-4">
+      <div className="grid grid-cols-1 mt-12 overflow-hidden bg-white rounded-lg shadow md:grid-cols-4">
         <div>
           <div className="px-4 py-5 sm:p-6">
             <dl>
@@ -104,104 +106,20 @@ function Home({ t }) {
         </div>
       </div>
       <div className="mt-32">
-        <h2 className="text-4xl font-extrabold leading-normal tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-normal md:text-4xl">
+        <h2 className="text-2xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-xl sm:leading-none md:text-4xl">
           {t(
             'In order to neutralize the virus please follow the following recommendations'
           )}
         </h2>
-        <ul className="grid grid-cols-1 gap-10 mt-20 sm:gap-14 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              description: 'Wear your masks.',
-              icon: 'medicalmask',
-            },
-            {
-              description: 'Avoid any unnecessary contact.',
-              icon: 'nohandshake',
-            },
-            {
-              description: 'Wash your hands regularly.',
-              icon: 'handwashing',
-            },
-            {
-              description: 'Avoid large groups of people.',
-              icon: 'nogroups',
-            },
-            {
-              description: 'Take the necessary precautions when you go out.',
-              icon: 'attention',
-            },
-            {
-              description: "Stay at home whenever it's possible.",
-              icon: 'stayhome',
-            },
-          ].map((item) => {
-            return (
-              <li className="flex col-span-1 mx-auto">
-                <div className="flex flex-col justify-center text-center">
-                  <img
-                    src={`/images/recommendations/${item.icon}.svg`}
-                    alt=""
-                    className="w-24 h-24 mx-auto"
-                  />
-                  <p className="mt-4 text-base font-semibold">
-                    {t(`${item.description}`)}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Recommendations />
       </div>
       <div className="mt-32 mb-32">
-        <h2 className="text-4xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-5xl sm:leading-normal md:text-4xl">
+        <h2 className="text-2xl font-extrabold leading-10 tracking-tighter text-center text-gray-900 sm:text-xl sm:leading-none md:text-4xl">
           {t(
             'If you feel any of these symptoms please seek medical attention, contact the nearest doctor/medical facility'
           )}
         </h2>
-        <ul className="grid grid-cols-1 gap-10 mt-20 sm:gap-14 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              description: 'Dry cough.',
-              icon: 'cough',
-            },
-            {
-              description: 'Dizziness.',
-              icon: 'dizziness',
-            },
-            {
-              description: 'Fever.',
-              icon: 'fever',
-            },
-            {
-              description: 'High Temperature.',
-              icon: 'hightemperature',
-            },
-            {
-              description: 'Breathing difficulties.',
-              icon: 'lungs',
-            },
-            {
-              description: 'Tiredness.',
-              icon: 'tiredness',
-            },
-          ].map((item) => {
-            return (
-              <li className="flex col-span-1 mx-auto">
-                <div className="flex flex-col justify-center text-center">
-                  <img
-                    src={`/images/symptoms/${item.icon}.svg`}
-                    alt=""
-                    className="w-24 h-24 mx-auto"
-                  />
-                  <p className="mt-4 text-base font-semibold">
-                    {t(`${item.description}`)}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Symptoms />
       </div>
     </div>
   );
