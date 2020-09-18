@@ -21,6 +21,7 @@ function Header({ t }) {
             <div className="flex items-center mr-2 -ml-2 md:hidden">
               <button
                 onClick={() => setOpen(!open)}
+                aria-label="open and close mobile menu"
                 type="button"
                 className="inline-flex items-center justify-center p-2 text-gray-900 transition duration-150 ease-in-out rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
               >
@@ -174,13 +175,13 @@ function Header({ t }) {
         <div className="pb-3 border-t border-gray-300 ">
           <div className="px-2 mt-3 sm:px-3">
             <button
-              onClick={() => i18n.changeLanguage('en')}
+              onClick={() => i18n.changeLanguage('fr')}
               className="block w-full py-2 text-base font-medium text-gray-900 transition duration-150 ease-in-out"
             >
               Français
             </button>
             <button
-              onClick={() => i18n.changeLanguage('ar')}
+              onClick={() => i18n.changeLanguage('en')}
               className="block w-full py-2 text-base font-medium text-gray-900 transition duration-150 ease-in-out"
             >
               English

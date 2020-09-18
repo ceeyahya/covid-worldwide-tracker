@@ -5,9 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
+    "@loadable/component": "^5.13.2",
+    "@loadable/server": "^5.13.2",
+    "@loadable/webpack-plugin": "^5.13.0",
     "@tailwindcss/ui": "^0.6.0",
     "autoprefixer": "^9.8.6",
     "classnames": "^2.2.6",
@@ -20,5 +26,9 @@
     "react-query": "^2.20.0",
     "react-query-devtools": "^2.4.7",
     "tailwindcss": "^1.8.10"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^9.5.3",
+    "cross-env": "^7.0.2"
   }
 }
