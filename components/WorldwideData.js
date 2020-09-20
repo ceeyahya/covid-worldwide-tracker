@@ -104,8 +104,4 @@ function WorldwideData({ t }) {
   );
 }
 
-WorldwideData.getInitialProps = async () => ({
-  namespacesRequired: ['common'],
-});
-
 export default withTranslation('common')(WorldwideData);

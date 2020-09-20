@@ -256,8 +256,4 @@ function maroc({ t }) {
   );
 }
 
-maroc.getInitialProps = async () => ({
-  namespacesRequired: ['maroc'],
-});
-
 export default withTranslation('maroc')(maroc);
