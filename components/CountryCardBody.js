@@ -25,4 +25,8 @@ function CountryCardBody({ t, cases, deaths, recovered }) {
   );
 }
 
+CountryCardBody.getInitialProps = async () => ({
+  namespacesRequired: ['dashboard'],
+});
+
 export default withTranslation('dashboard')(CountryCardBody);

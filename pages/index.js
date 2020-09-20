@@ -17,7 +17,7 @@ function Home({ t }) {
           {t(
             'If you feel any of these symptoms please seek medical attention, contact the nearest doctor/medical facility'
           )}{' '}
-          <br className="block lg:hidden" />
+          <br className="block" />
           <span className="text-2xl font-normal text-gray-400 sm:text-2xl">
             (Allô Yakada: 080 100 47 47 / Allô SAMU: 141 )
           </span>
@@ -35,5 +35,9 @@ function Home({ t }) {
     </div>
   );
 }
+
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['common'],
+});
 
 export default withTranslation()(Home);

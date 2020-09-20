@@ -100,4 +100,8 @@ function dashboard({ t }) {
   );
 }
 
+dashboard.getInitialProps = async () => ({
+  namespacesRequired: ['dashboard'],
+});
+
 export default withTranslation('dashboard')(dashboard);
