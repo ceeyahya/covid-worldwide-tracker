@@ -7,11 +7,11 @@ function Symptoms({ t }) {
         <li className="flex col-span-1 mx-auto">
           <div className="flex flex-col justify-center text-center">
             <img
-              src="/images/symptoms/dizziness.svg"
+              src="/images/symptoms/hightemperature.svg"
               alt=""
               className="w-24 h-24 mx-auto"
             />
-            <p className="mt-4 text-base font-semibold">{t('Dizziness')}</p>
+            <p className="mt-4 text-base font-semibold">{t('Fever')}</p>
           </div>
         </li>
         <li className="flex col-span-1 mx-auto">
@@ -27,25 +27,38 @@ function Symptoms({ t }) {
         <li className="flex col-span-1 mx-auto">
           <div className="flex flex-col justify-center text-center">
             <img
-              src="/images/symptoms/fever.svg"
+              src="/images/symptoms/lungs.svg"
               alt=""
               className="w-24 h-24 mx-auto"
             />
-            <p className="mt-4 text-base font-semibold">{t('Fever')}</p>
+            <p className="mt-4 text-base font-semibold">
+              {t('Breathing difficulties')}
+            </p>
           </div>
         </li>
         <li className="flex col-span-1 mx-auto">
           <div className="flex flex-col justify-center text-center">
             <img
-              src="/images/symptoms/hightemperature.svg"
+              src="/images/symptoms/fever.svg"
               alt=""
               className="w-24 h-24 mx-auto"
             />
             <p className="mt-4 text-base font-semibold">
-              {t('High Temperature')}
+              {t('Loss of smell and taste')}
             </p>
           </div>
         </li>
+        <li className="flex col-span-1 mx-auto">
+          <div className="flex flex-col justify-center text-center">
+            <img
+              src="/images/symptoms/dizziness.svg"
+              alt=""
+              className="w-24 h-24 mx-auto"
+            />
+            <p className="mt-4 text-base font-semibold">{t('Dizziness')}</p>
+          </div>
+        </li>
+
         <li className="flex col-span-1 mx-auto">
           <div className="flex flex-col justify-center text-center">
             <img
@@ -54,18 +67,6 @@ function Symptoms({ t }) {
               className="w-24 h-24 mx-auto"
             />
             <p className="mt-4 text-base font-semibold">{t('Tiredness')}</p>
-          </div>
-        </li>
-        <li className="flex col-span-1 mx-auto">
-          <div className="flex flex-col justify-center text-center">
-            <img
-              src="/images/symptoms/lungs.svg"
-              alt=""
-              className="w-24 h-24 mx-auto"
-            />
-            <p className="mt-4 text-base font-semibold">
-              {t('Breathing difficulties')}
-            </p>
           </div>
         </li>
       </ul>
